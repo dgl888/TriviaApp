@@ -1,5 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
 import {ICategory} from '../../shared/category.model';
 
 @Component({
@@ -15,9 +16,12 @@ export class LandingPageComponent implements OnInit {
     'Hard'
   ]
 
+  public selectedCategory!: string;
+  public selectedDifficulty!: string;
+
   private apiUrl = 'https://opentdb.com/api_category.php';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
     this.fetchData();
@@ -30,6 +34,17 @@ export class LandingPageComponent implements OnInit {
   }
 
   createQuiz() {
+    this.router.navigate(['quiz'], {queryParams: {
+      category: this.selectedCategory, difficulty: this.selectedDifficulty
+    }});
+  }
 
+  onCategorySelected(value: string) {
+    this.selectedCategory = value;
+  }
+
+
+  onDifficultySelected(value: string) {
+    this.selectedDifficulty = value;
   }
 }
