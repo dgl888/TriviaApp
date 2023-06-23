@@ -1,0 +1,21 @@
+<div class="container">
+  <mat-label>Category</mat-label>
+  <mat-form-field appearance="fill">
+    <mat-select>
+      <mat-option *ngFor="let category of categories" [value]="category.name">
+        {{category.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-label>Difficulty</mat-label>
+
+  <mat-form-field appearance="fill">
+    <mat-select>
+      <mat-option *ngFor="let difficulty of difficulties" [value]="difficulty">
+        {{difficulty}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-stroked-button (click)="createQuiz()">Create Quiz</button>
+</div>
