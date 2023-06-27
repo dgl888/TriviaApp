@@ -1,7 +1,7 @@
 <div class="container">
   <mat-label>Category</mat-label>
   <mat-form-field appearance="fill">
-    <mat-select (selectionChange)="onCategorySelected($event.value)">
+    <mat-select (selectionChange)="onCategorySelected($event.value)" id="categorySelect">
       <mat-option *ngFor="let category of categories" [value]="category.name">
         {{category.name}}
       </mat-option>
@@ -10,12 +10,12 @@
   <mat-label>Difficulty</mat-label>
 
   <mat-form-field appearance="fill">
-    <mat-select (selectionChange)="onDifficultySelected($event.value)">
+    <mat-select (selectionChange)="onDifficultySelected($event.value)" id="difficultySelect">
       <mat-option *ngFor="let difficulty of difficulties" [value]="difficulty">
         {{difficulty}}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
-  <button mat-stroked-button (click)="createQuiz()">Create Quiz</button>
+  <button id="createBtn" mat-stroked-button (click)="createQuiz()">Create Quiz</button>
 </div>

@@ -34,8 +34,10 @@ export class LandingPageComponent implements OnInit {
   }
 
   createQuiz() {
+    let id  = this.categories.find(category => category.name === this.selectedCategory)?.id
     this.router.navigate(['quiz'], {queryParams: {
-      category: this.selectedCategory, difficulty: this.selectedDifficulty
+      category: id,
+        difficulty: this.selectedDifficulty
     }});
   }
 
