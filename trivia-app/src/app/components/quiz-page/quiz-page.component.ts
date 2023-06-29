@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {IQuestion} from '../../shared/results.model';
 
 @Component({
@@ -17,7 +17,7 @@ export class QuizPageComponent implements OnInit {
   private difficulty: string = 'all';
   private category: string = 'all'
 
-  constructor(private http: HttpClient, private activatedRoute: ActivatedRoute) { }
+  constructor(private http: HttpClient, private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.setupUrl();
@@ -48,9 +48,13 @@ export class QuizPageComponent implements OnInit {
 
   submit() {
     this.isSubmitted = true;
-    if (this.questions.every(question => question.correct_answer == question.selectedAnswer)) {
-      this.finalScore ++;
-    }
+    this.questions.forEach(question => {
+      if(question.correct_answer == question.selectedAnswer) {
+        this.finalScore++;
+      }
+    })
+
+    this.router.navigate(['graded-quiz'], {state: {questions: this.questions, finalScore: this.finalScore}});
   }
 
   randomizeAnswers() {
@@ -63,19 +67,5 @@ export class QuizPageComponent implements OnInit {
 
   areAllAnswersSelected(): boolean {
     return this.questions.every(question => !!question.selectedAnswer);
-  }
-
-  getQuestionClass(answer: string, selectedAnswer: string | null, correct_answer: string) {
-    if(this.isSubmitted) {
-      if(answer == correct_answer) {
-        return 'correct'
-      } else if(answer == selectedAnswer && answer != correct_answer){
-        return 'incorrect'
-      } else {
-        return '';
-      }
-    } else {
-      return '';
-    }
   }
 }

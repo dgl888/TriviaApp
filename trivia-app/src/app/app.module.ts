@@ -12,12 +12,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { QuizPageComponent } from './components/quiz-page/quiz-page.component';
+import { GradedPageComponent } from './components/graded-page/graded-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingPageComponent,
-    QuizPageComponent
+    QuizPageComponent,
+    GradedPageComponent
   ],
   imports: [
     BrowserModule,
