@@ -10,7 +10,9 @@ import {IQuestion} from '../../shared/results.model';
 })
 export class QuizPageComponent implements OnInit {
 
+  public isSubmitted: boolean = false;
   public questions: IQuestion[] = [];
+  public finalScore: number = 0;
   private apiUrl = 'https://opentdb.com/api.php?amount=5';
   private difficulty: string = 'all';
   private category: string = 'all'
@@ -31,11 +33,9 @@ export class QuizPageComponent implements OnInit {
       this.apiUrl = this.apiUrl.concat(`&difficulty=${this.difficulty.toLowerCase()}`);
     }
 
-    console.log(this.apiUrl)
     this.http.get<any>(this.apiUrl).subscribe((data) => {
-      console.log(data)
       this.questions = data.results;
-      console.log(this.questions);
+      this.randomizeAnswers();
     });
   }
 
@@ -44,5 +44,38 @@ export class QuizPageComponent implements OnInit {
       this.difficulty = data['difficulty'];
       this.category = data['category'];
     })
+  }
+
+  submit() {
+    this.isSubmitted = true;
+    if (this.questions.every(question => question.correct_answer == question.selectedAnswer)) {
+      this.finalScore ++;
+    }
+  }
+
+  randomizeAnswers() {
+    this.questions.forEach( (question, index) => {
+      this.questions[index].selectedAnswer = null;
+      this.questions[index].all_answers = [...question.incorrect_answers, question.correct_answer];
+      this.questions[index].all_answers.sort(() => Math.random() - 0.5);
+    });
+  }
+
+  areAllAnswersSelected(): boolean {
+    return this.questions.every(question => !!question.selectedAnswer);
+  }
+
+  getQuestionClass(answer: string, selectedAnswer: string | null, correct_answer: string) {
+    if(this.isSubmitted) {
+      if(answer == correct_answer) {
+        return 'correct'
+      } else if(answer == selectedAnswer && answer != correct_answer){
+        return 'incorrect'
+      } else {
+        return '';
+      }
+    } else {
+      return '';
+    }
   }
 }
