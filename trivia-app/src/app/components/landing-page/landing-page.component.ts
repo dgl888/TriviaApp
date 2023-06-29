@@ -14,11 +14,10 @@ export class LandingPageComponent implements OnInit {
     'Easy',
     'Medium',
     'Hard'
-  ]
+  ];
 
   public selectedCategory: string = 'none';
   public selectedDifficulty: string = 'none';
-
   private apiUrl = 'https://opentdb.com/api_category.php';
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -34,10 +33,9 @@ export class LandingPageComponent implements OnInit {
   }
 
   createQuiz() {
-    let id  = this.categories.find(category => category.name === this.selectedCategory)?.id
+    let id  = this.categories.find(category => category.name === this.selectedCategory)?.id;
     this.router.navigate(['quiz'], {queryParams: {
-      category: id,
-        difficulty: this.selectedDifficulty
+      category: id, categoryName: this.selectedCategory, difficulty: this.selectedDifficulty
     }});
   }
 

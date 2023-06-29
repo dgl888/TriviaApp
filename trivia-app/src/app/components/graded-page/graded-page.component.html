@@ -1,4 +1,4 @@
-<h1 class="header">Results:</h1>
+<h1 class="header">Test Results - {{difficulty}} - {{categoryName}}</h1>
 <ng-container *ngFor="let question of questions">
   <mat-label>{{ question.question }}</mat-label>
   <mat-radio-group class="radio-group" [(ngModel)]="question.selectedAnswer" #radioGroup="ngModel" required>

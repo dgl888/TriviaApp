@@ -10,19 +10,20 @@ import {IQuestion} from '../../shared/results.model';
 export class GradedPageComponent implements OnInit {
   public questions: IQuestion[] = [];
   public finalScore: number = 0;
+  public difficulty: string = 'all';
+  public categoryName: string = 'all';
 
   constructor(private router: Router) {
     let state = this.router.getCurrentNavigation()?.extras.state;
     if (state) {
-      console.log(state);
-      console.log(state);
       this.questions = state['questions'];
       this.finalScore = state['finalScore'];
+      this.difficulty = state['difficulty'];
+      this.categoryName = state['categoryName'];
     }
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   getQuestionClass(answer: string, selectedAnswer: string | null, correct_answer: string) {
     if(answer == correct_answer) {

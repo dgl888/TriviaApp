@@ -13,9 +13,10 @@ export class QuizPageComponent implements OnInit {
 
   public questions: IQuestion[] = [];
   public finalScore: number = 0;
+  public difficulty: string = 'all';
+  public category: string = 'all';
+  public categoryName: string = 'all'
   private apiUrl = 'https://opentdb.com/api.php?amount=5';
-  private difficulty: string = 'all';
-  private category: string = 'all'
 
   constructor(private http: HttpClient, private activatedRoute: ActivatedRoute, private router: Router) { }
 
@@ -43,6 +44,7 @@ export class QuizPageComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(data => {
       this.difficulty = data['difficulty'];
       this.category = data['category'];
+      this.categoryName = data['categoryName'];
     })
   }
 
@@ -53,7 +55,12 @@ export class QuizPageComponent implements OnInit {
       }
     });
 
-    this.router.navigate(['graded-quiz'], {state: {questions: this.questions, finalScore: this.finalScore}});
+    this.router.navigate(['graded-quiz'], {state: {
+        questions: this.questions,
+        finalScore: this.finalScore,
+        difficulty: this.difficulty,
+        categoryName: this.categoryName
+    }});
   }
 
   randomizeAnswers() {
