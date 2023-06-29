@@ -1,7 +1,14 @@
-.container {
+:host {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
+  padding: 50px 100px;
+
+  .mat-form-field {
+    width: 500px;
+  }
 }
+
 
 

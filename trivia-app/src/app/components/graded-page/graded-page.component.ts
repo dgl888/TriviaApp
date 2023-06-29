@@ -33,4 +33,8 @@ export class GradedPageComponent implements OnInit {
       return '';
     }
   }
+
+  setClass() {
+    return this.finalScore === 0 || this.finalScore === 1 ? 'fail' : this.finalScore === 2 || this.finalScore === 3 ? 'pass' : 'success';
+  }
 }

@@ -2,6 +2,7 @@ import {HttpClient} from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {IQuestion} from '../../shared/results.model';
+import * as he from 'he';
 
 @Component({
   selector: 'app-quiz-page',
@@ -10,7 +11,6 @@ import {IQuestion} from '../../shared/results.model';
 })
 export class QuizPageComponent implements OnInit {
 
-  public isSubmitted: boolean = false;
   public questions: IQuestion[] = [];
   public finalScore: number = 0;
   private apiUrl = 'https://opentdb.com/api.php?amount=5';
@@ -47,18 +47,26 @@ export class QuizPageComponent implements OnInit {
   }
 
   submit() {
-    this.isSubmitted = true;
     this.questions.forEach(question => {
       if(question.correct_answer == question.selectedAnswer) {
         this.finalScore++;
       }
-    })
+    });
 
     this.router.navigate(['graded-quiz'], {state: {questions: this.questions, finalScore: this.finalScore}});
   }
 
   randomizeAnswers() {
     this.questions.forEach( (question, index) => {
+
+      //Decode Answers so that they display symbols correctly
+      this.questions[index].question = he.decode(question.question);
+      this.questions[index].correct_answer = he.decode(question.correct_answer);
+      this.questions[index].incorrect_answers.forEach( (iQuestion, i) => {
+        this.questions[index].incorrect_answers[i] = he.decode(question.incorrect_answers[i]);
+      });
+
+      //Setup selected answer, and randomize list order of all answers
       this.questions[index].selectedAnswer = null;
       this.questions[index].all_answers = [...question.incorrect_answers, question.correct_answer];
       this.questions[index].all_answers.sort(() => Math.random() - 0.5);

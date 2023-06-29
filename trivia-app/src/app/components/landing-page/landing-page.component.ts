@@ -16,8 +16,8 @@ export class LandingPageComponent implements OnInit {
     'Hard'
   ]
 
-  public selectedCategory!: string;
-  public selectedDifficulty!: string;
+  public selectedCategory: string = 'none';
+  public selectedDifficulty: string = 'none';
 
   private apiUrl = 'https://opentdb.com/api_category.php';
 
